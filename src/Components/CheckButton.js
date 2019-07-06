@@ -2,9 +2,7 @@ import React from 'react';
 import {View,StyleSheet,TouchableOpacity,Image} from 'react-native';
 import { withNavigation } from 'react-navigation'
 
-
 class CheckButton extends React.Component {
-
 
    render(){
     return(

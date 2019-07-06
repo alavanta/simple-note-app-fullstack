@@ -4,18 +4,38 @@ import Modal from "react-native-modal";
 import { styles } from '../Components/styles/DrawerItemStyle' 
 import { withNavigation } from 'react-navigation';
 import {Button} from 'react-native-elements'
+import {addCategory} from '../public/redux/action/notes'
+import {connect} from 'react-redux';
 
 
 //var screenWidth= Dimensions.get('window').width;
  class CategoryModal extends Component{
 
   state = {
-    isModalVisible: false
+    isModalVisible: false,
+    categoryName:'',
+    categoryImageUrl:''
   };
  
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
+
+  addCategory = () => {
+    const name = this.state.categoryName;
+    const image = this.state.categoryImageUrl;
+    
+
+    if (name !== '' && image !== '') {
+        this.props.dispatch(addCategory({ name,image }));
+        //this.toggleModal;
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+        
+    } else {
+      alert('fill all required form first!');
+        
+    }
+}
      
   // componentDidMount = () => {
   //   this.toggleModal
@@ -39,6 +59,8 @@ import {Button} from 'react-native-elements'
             hasBackdrop={true}
             onBackButtonPress={this.toggleModal}
             onBackdropPress={this.toggleModal}
+
+            
             style={{position:'relative',marginLeft:50}}
             isVisible={this.state.isModalVisible}
             >
@@ -48,16 +70,21 @@ import {Button} from 'react-native-elements'
           style={{fontSize:14,borderBottomColor:'#2ED1A2',borderBottomWidth:2,marginLeft:25,marginRight:25,marginBottom:10,marginTop:20}}
           placeholder="Category Name"
           maxLength={50}
+          value={ this.state.categoryName}
+          onChangeText={(categoryName) => this.setState({categoryName})}
         />
 
         <TextInput
                 
           style={{fontSize:14,borderBottomColor:'#2ED1A2',borderBottomWidth:2,marginLeft:25,marginRight:25}}
           placeholder="Image URL"
-          maxLength={50}
+          
+          value={ this.state.categoryImageUrl}
+          onChangeText={(categoryImageUrl) => this.setState({categoryImageUrl})}
         />
         <View style={{flex:1,flexDirection:'row-reverse',paddingTop:15,paddingRight:20,}}>
-        <TouchableOpacity style={{marginRight:35}} onPress={this.toggleModal} >
+        <TouchableOpacity style={{marginRight:35}} 
+        onPress={this.addCategory} >
         <Text style={{fontSize:18,fontWeight:'bold'}}>Add</Text>
         </TouchableOpacity>
         
@@ -78,4 +105,10 @@ import {Button} from 'react-native-elements'
         );
       }
     }
-  export default withNavigation(CategoryModal);
+    const mapStateToProps = ( state ) => {
+      return{
+          category:state.category
+      }
+    }
+    export default connect(mapStateToProps)(CategoryModal)
+//  export default withNavigation(CategoryModal);

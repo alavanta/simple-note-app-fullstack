@@ -2,7 +2,6 @@ import React from 'react';
 import {View,StyleSheet,TouchableOpacity,Image} from 'react-native';
 import { withNavigation, DrawerActions,NavigationAction } from 'react-navigation'
 
-
 class HeaderLeftButton extends React.Component {
     toggleDrawer = () => {
         this.props.navigation.toggleDrawer()

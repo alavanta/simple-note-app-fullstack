@@ -4,7 +4,6 @@ import {SearchBar} from 'react-native-elements';
 
 const searchBars=({ navigation}) =>{
 
-   
     return(
         <SearchBar
         placeholder="Search..."

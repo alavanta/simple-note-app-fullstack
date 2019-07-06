@@ -5,12 +5,12 @@ import {
   createAppContainer,
   createDrawerNavigator
  } from "react-navigation";
+ import {Provider} from 'react-redux'
+
  import Home from '../Screens/home';
  import Note from '../Screens/Note';
  import MenuDrawer from '../Components/MenuDrawer';
-
- 
-
+ import store from '../public/redux/store'
 
  const RootStack = createStackNavigator(
     {
@@ -26,8 +26,6 @@ import {
       }
       ,{
         mode: 'modal',
-        
-        
       } 
   )
 
@@ -47,12 +45,20 @@ import {
       contentComponent:({ navigation}) =>{
         return(<MenuDrawer/>)
       }
-      
     }
   )
   
   
   
-  const appContainer = createAppContainer(MainDrawer);
+  const AppContainer = createAppContainer(MainDrawer);
   
-  export default appContainer;
+  export default class App extends Component{
+    render(){
+      return(
+        <Provider store={store}>
+          <AppContainer/>
+        </Provider>
+        
+      )
+    }
+  }

@@ -8,27 +8,36 @@ StyleSheet,
 Image,
 ImageBackground,
 TouchableOpacity,
-ScrollView
+ScrollView,
+Alert
 }
 from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { Icon,Button } from 'react-native-elements';
 //import {Modal} from 'react-native-modal';
 import ModalView from '../Components/Modal';
+import {getCategory,removeCategory,getNotes} from '../public/redux/action/notes'
+import {connect} from 'react-redux';
+
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT= Dimensions.get('window').height;
 
 class MenuDrawer extends React.Component{
 
-    navLink(nav,text,path){
+    state = {
+        category:this.props.category.category
+      };
+    navLink(nav,text,path,key){
         return(
+        <TouchableOpacity key={key}
+        delayLongPress={300}
+        onLongPress={() => this.deleteCategory(key)}
         
-        <TouchableOpacity 
-        onPress={() => this.props.navigation.navigate(nav,{header:'',title:'',note:''})}
+        onPress={() => this.props.dispatch(getNotes('',1,this.props.notes.sorted,text))}
         style={styles.FacebookStyle} activeOpacity={0.5}>
          <Image 
-          source={path} 
+          source={{uri:path}} 
           style={styles.ImageIconStyle} 
           />
          <View style={styles.SeparatorLine} />
@@ -36,7 +45,40 @@ class MenuDrawer extends React.Component{
        </TouchableOpacity>
         )
     }
-    
+    getDataCategory = () => {
+        this.props.dispatch(getCategory())
+        this.setState({
+            category:this.props.category.category
+        })
+      }
+
+      deleteCategory = (id) => {
+        Alert.alert(
+          "Delete Category",
+          "Are you sure want to delete this category?",
+          [{
+                  text: "NO", onPress: () => {}
+              },
+              {
+                  text: "YES", onPress: () => {
+                    if(id !== ''){
+                      //  console.log(ids);
+                      this.props.dispatch(removeCategory(id))
+                      }
+                  }
+              }
+          ],
+          { cancelable: false }
+      )
+      }
+
+    componentDidMount(){
+        this.getDataCategory()
+        this.setState({
+            category:this.props.notes.category
+          })
+    }
+
     render(){
     return(
         <ScrollView>
@@ -51,9 +93,14 @@ class MenuDrawer extends React.Component{
         >Dhieo Deva Alavanta</Text>
         </View>
         <View style={styles.bottomLink}>
-        {this.navLink('Note','Personal',require('../Assets/images/personal.png'))}
-        {this.navLink('Note','Work',require('../Assets/images/work.png'))}
-        {this.navLink('Note','Wishlist',require('../Assets/images/wishlist.png'))}
+        {
+    this.props.category.category.map((item, index) => {
+        //console.log(item.name);
+       return (
+        this.navLink('',item.name,item.image,item.id)
+       )
+     })
+   }
         <ModalView/>
         </View>
         </View>
@@ -61,7 +108,6 @@ class MenuDrawer extends React.Component{
     )
     }
 }
-
 
 const styles=StyleSheet.create ({
 
@@ -128,5 +174,12 @@ const styles=StyleSheet.create ({
      }
 })
 
-export default withNavigation(MenuDrawer);
+//export default withNavigation(MenuDrawer);
+const mapStateToProps = ( state ) => {
+    return{
+        notes:state.notes,
+        category:state.category
+    }
+  }
+  export default connect(mapStateToProps)(MenuDrawer)
 

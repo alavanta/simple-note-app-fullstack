@@ -2,6 +2,8 @@ import React from 'react';
 import { Image,StyleSheet, TouchableOpacity} from "react-native";
 import {withNavigation} from 'react-navigation';
 import Menu, {MenuItem} from "react-native-material-menu";
+import {connect} from 'react-redux';
+import {getSearchNotes,changeSort,getNotes} from '../public/redux/action/notes';
 
 class HeaderRButton extends React.Component {
   _menu = null;
@@ -10,16 +12,22 @@ class HeaderRButton extends React.Component {
       this._menu = ref;
   };
 
-  hideMenu = () => {
+  hideMenu = (sort) => {
+    this.props.dispatch(changeSort(sort))
+    this.props.notes.searchKeyword!=="" ? 
+    this.props.dispatch(getSearchNotes(this.props.notes.searchKeyword,1,sort)) :
+    this.props.dispatch(getNotes(this.props.notes.searchKeyword,1,sort,this.props.notes.selectedCategory))
       this._menu.hide();
+      
   };
 
   showMenu = () => {
       this._menu.show();
   };
+
+
  render(){
   return(
-
     <Menu
         ref={(ref) => this._menu = ref}
         button={
@@ -27,8 +35,9 @@ class HeaderRButton extends React.Component {
           <Image source={require('../Assets/images/sort.png')} style={{width: 20, height: 20, alignSelf:'center'}} resizeMode='contain'/>
         </TouchableOpacity>
       }>
-       <MenuItem onPress={() => this.hideMenu()} textStyle={styles.MenuItems}>ASCENDING</MenuItem>
-       <MenuItem onPress={() => this.hideMenu()} textStyle={styles.MenuItems}>DESCENDING</MenuItem>
+       {/* <MenuItem onPress={() => this.hideMenu('ASC')} hidemenu={this.hideMenu} textStyle={styles.MenuItems}>ASCENDING</MenuItem> */}
+       <MenuItem onPress={() => this.hideMenu('ASC')} textStyle={styles.MenuItems}>ASCENDING</MenuItem>
+       <MenuItem onPress={() => this.hideMenu('DESC')} textStyle={styles.MenuItems}>DESCENDING</MenuItem>
     </Menu>
     
   )
@@ -43,5 +52,12 @@ const styles= StyleSheet.create({
   }
 });
 
-export default withNavigation(HeaderRButton);
+const mapStateToProps = ( state ) => {
+  return{
+      notes:state.notes
+  }
+}
+export default connect(mapStateToProps)(HeaderRButton)
+
+//export default withNavigation(HeaderRButton);
 
