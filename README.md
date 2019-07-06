@@ -35,7 +35,7 @@ React Native invokes Objective-C APIs to render to iOS components, or Java APIs 
 5. And the last just type in your terminal or cmd `react-native run-android`, be sure if you connected with a device on debugging mode or use the emulator on debugging mode too.
 
 ## Related Project
-Front End `https://github.com/alavanta/front-end-simple-note-app.git`
+Front End `https://github.com/alavanta/front-end-simple-note-app.git`<br>
 Back End `https://github.com/alavanta/simple-note-app-fullstack.git`
 
 ## Released APK
