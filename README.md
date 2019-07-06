@@ -34,7 +34,7 @@ React Native invokes Objective-C APIs to render to iOS components, or Java APIs 
 4. run backend first
 5. And the last just type in your terminal or cmd `react-native run-android`, be sure if you connected with a device on debugging mode or use the emulator on debugging mode too.
 
-## Release APK
+## Released APK
 if u want to test it out , u can download it here `https://bit.ly/2FXdS9X`
 
 ## Screenshot from the app
