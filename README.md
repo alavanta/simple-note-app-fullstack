@@ -37,6 +37,9 @@ React Native invokes Objective-C APIs to render to iOS components, or Java APIs 
 ## Released APK
 if u want to test it out , u can download it here `https://bit.ly/2FXdS9X`
 
+## Watch how the app work
+Here! `https://bit.ly/30gZuBi`
+ 
 ## Screenshot from the app
 <p align='center'>
   <span>
