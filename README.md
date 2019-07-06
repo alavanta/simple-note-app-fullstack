@@ -32,7 +32,7 @@ React Native invokes Objective-C APIs to render to iOS components, or Java APIs 
 2. Open the project in your favorite text editor
 3. Open your terminal or cmd and type `npm install`
 4. Run backend first
-5. And the last just type in your terminal or cmd `react-native run-android`, be sure if you connected with a device on debugging mode or use the emulator on debugging mode too.
+5. And the last thing just type `react-native run-android` in your terminal or cmd , be sure if you connected with a device on debugging mode or use the emulator on debugging mode too.
 
 ## Related Project
 Front End `https://github.com/alavanta/front-end-simple-note-app.git`<br>
