@@ -16,7 +16,7 @@ class home extends Component {
 
   constructor(props) {
     super(props);
-    state = {
+    this.state = {
       search: '',
       title:'ADD NOTE',
       noteTitle:'',
